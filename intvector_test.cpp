@@ -68,7 +68,7 @@ TEST_CASE("Modifikation mit push_back() und pop_back()", "[Vector][Modifiers]") 
     Vector v;
 
     SECTION("push_back fügt Elemente hinzu und vergrößert Kapazität dynamisch") {
-        for (size_t i{0}; i <= 20; ++i) {
+        for (size_t i{1}; i <= 20; ++i) {
             v.push_back(i * 10);
             REQUIRE(v.size() == i);
             REQUIRE(v.at(i - 1) == i * 10);
