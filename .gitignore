@@ -1,0 +1,17 @@
+# everything inside the build directory
+build/
+
+# main executable
+intvector
+
+# backup files
+*~
+
+*.ii
+*.s
+*.o
+*.out
+*-swp
+
+.directory
+
