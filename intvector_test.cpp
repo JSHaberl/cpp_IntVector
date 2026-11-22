@@ -64,8 +64,9 @@ TEST_CASE("Accessing elements with at() and operator[]", "[Vector][Access]") {
     }
 }
 
-TEST_CASE("Modification with push_back() and pop_back()", "[Vector][Modifiers]") {
+TEST_CASE("Modification with push_back(), pop_back() and copy()", "[Vector][Modifiers]") {
     Vector v;
+    int arr[] = {1, 2, 3, 4};
 
     SECTION("push_back adds elements and dynamically increases capacity") {
         for (size_t i{1}; i <= 20; ++i) {
@@ -90,6 +91,14 @@ TEST_CASE("Modification with push_back() and pop_back()", "[Vector][Modifiers]")
         REQUIRE(v.pop_back() == 100);
         REQUIRE(v.size() == 0);
         REQUIRE(v.empty());
+    }
+
+    SECTION("copy copies array to Vector") {
+        v.copy(arr, 4);
+        REQUIRE(v.size() == 4);
+        for (size_t i{0}; i < v.size(); i++){
+            REQUIRE( v[i] == arr[i]);
+        }
     }
 }
 
