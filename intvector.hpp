@@ -15,11 +15,11 @@ namespace intvector {
             bool empty() const {return size_ == 0;};
             Vector operator+(Vector& other) const;
             int operator[](int index) const {return this->at(index);}
+            void copy(int* arr, size_t size = 0);
             ~Vector(){delete array_;};
 
         private:
             void resize(size_t cap);
-            void copy(int* arr, size_t size = 0);
             size_t size_;
             size_t capacity_;
             int* array_;
