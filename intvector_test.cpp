@@ -3,14 +3,14 @@
 
 using intvector::Vector;
 
-TEST_CASE("Konstruktoren und grundlegende Eigenschaften", "[Vector][Constructor]") {
-    SECTION("Standardkonstruktor erzeugt leeren Vektor") {
+TEST_CASE("Constructor and defaut values", "[Vector][Constructor]") {
+    SECTION("Default-Constructor generates empty Vector") {
         Vector v;
         REQUIRE(v.size() == 0);
         REQUIRE(v.empty() == true);
     }
 
-    SECTION("Konstruktor mit übergebenem Array") {
+    SECTION("Constructor with array") {
         int data[] = {10, 20, 30, 40};
         Vector v(data, 4);
 
@@ -22,13 +22,13 @@ TEST_CASE("Konstruktoren und grundlegende Eigenschaften", "[Vector][Constructor]
         REQUIRE(v.at(3) == 40);
     }
 
-    SECTION("Konstruktor mit Nullpointer und Größe 0") {
+    SECTION("Constructor with nullptr and size 0") {
         Vector v(nullptr, 0);
         REQUIRE(v.size() == 0);
         REQUIRE(v.empty());
     }
 
-    SECTION("Fill-Konstruktor mit Standardwert 0") {
+    SECTION("Fill-Constructor with default fill 0") {
         Vector v(5);
         REQUIRE(v.size() == 5);
         for (size_t i{0}; i < 5; ++i) {
@@ -36,7 +36,7 @@ TEST_CASE("Konstruktoren und grundlegende Eigenschaften", "[Vector][Constructor]
         }
     }
 
-    SECTION("Fill-Konstruktor mit benutzerdefiniertem Wert") {
+    SECTION("Fill-Constructor with defined fill") {
         Vector v(3, 42);
         REQUIRE(v.size() == 3);
         REQUIRE_FALSE(v.empty());
@@ -46,28 +46,28 @@ TEST_CASE("Konstruktoren und grundlegende Eigenschaften", "[Vector][Constructor]
     }
 }
 
-TEST_CASE("Elementzugriff mit at() und operator[]", "[Vector][Access]") {
+TEST_CASE("Accessing elements with at() and operator[]", "[Vector][Access]") {
     int data[] = {-5, 0, 15, 100};
     Vector v(data, 4);
 
-    SECTION("Lesen mit at()") {
+    SECTION("Getting elements with at()") {
         REQUIRE(v.at(0) == -5);
         REQUIRE(v.at(1) == 0);
         REQUIRE(v.at(2) == 15);
         REQUIRE(v.at(3) == 100);
     }
 
-    SECTION("Lesen mit operator[]") {
+    SECTION("Getting elements with operator[]") {
         REQUIRE(v[1] == 0);
         REQUIRE(v[2] == 15);
         REQUIRE(v[3] == 100);
     }
 }
 
-TEST_CASE("Modifikation mit push_back() und pop_back()", "[Vector][Modifiers]") {
+TEST_CASE("Modification with push_back() and pop_back()", "[Vector][Modifiers]") {
     Vector v;
 
-    SECTION("push_back fügt Elemente hinzu und vergrößert Kapazität dynamisch") {
+    SECTION("push_back adds elements and dynamically increases capacity") {
         for (size_t i{1}; i <= 20; ++i) {
             v.push_back(i * 10);
             REQUIRE(v.size() == i);
@@ -76,7 +76,7 @@ TEST_CASE("Modifikation mit push_back() und pop_back()", "[Vector][Modifiers]") 
         REQUIRE_FALSE(v.empty());
     }
 
-    SECTION("pop_back entfernt das letzte Element und gibt es zurück") {
+    SECTION("pop_back removes last element and returns it") {
         v.push_back(100);
         v.push_back(200);
         v.push_back(300);
@@ -93,13 +93,13 @@ TEST_CASE("Modifikation mit push_back() und pop_back()", "[Vector][Modifiers]") 
     }
 }
 
-TEST_CASE("Addition mit operator+", "[Vector][Operators]") {
+TEST_CASE("Addition with operator+", "[Vector][Operators]") {
     int a_data[] = {1, 2, 3};
     int b_data[] = {4, 5};
     Vector a(a_data, 3);
     Vector b(b_data, 2);
 
-    SECTION("Zwei Vektoren addieren") {
+    SECTION("Adding two Vectors") {
         Vector c = a + b;
         REQUIRE(c.size() == 5);
         REQUIRE(c.at(0) == 1);
@@ -112,7 +112,7 @@ TEST_CASE("Addition mit operator+", "[Vector][Operators]") {
         REQUIRE(b.size() == 2);
     }
 
-    SECTION("Addition mit leerem Vektor") {
+    SECTION("Adding with an empty Vector") {
         Vector empty_vec;
         Vector res1 = a + empty_vec;
         Vector res2 = empty_vec + a;
