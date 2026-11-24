@@ -5,7 +5,7 @@ classDiagram
             -size_t size_
             -size_t capacity_
             -int* array_
-            -resize(size_t cap) void
+            +resize(size_t cap) void
             +Vector(int* arr = nullptr, size_t arrsize = 0)
             +Vector(size_t fillsize, int num = 0)
             +at(int index) int

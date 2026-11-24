@@ -115,11 +115,12 @@ TEST_CASE("Modification with push_back(), pop_back() and copy()", "[Vector][Modi
     int b_data[] = {1, 2, 3};
 
     SECTION("push_back adds elements and dynamically increases capacity") {
-        for (size_t i{1}; i <= 20; ++i) {
+        for (size_t i{1}; i <= 120; ++i) {
             v.push_back(i * 10);
             REQUIRE(v.size() == i);
             REQUIRE(v.at(i - 1) == i * 10);
         }
+        REQUIRE(v.capacity() == 200);
         REQUIRE_FALSE(v.empty());
     }
 
