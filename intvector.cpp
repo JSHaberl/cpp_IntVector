@@ -22,7 +22,7 @@ namespace intvector {
 
     void Vector::resize(size_t cap) {
         if (size_ < cap) {
-            cap = size_;
+            return;
         }
         capacity_ = cap;
         int* newarr = new int[capacity_];
