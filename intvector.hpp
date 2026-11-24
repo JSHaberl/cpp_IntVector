@@ -6,20 +6,21 @@ namespace intvector {
     class Vector {
 
         public:
-            Vector(int* arr = nullptr, size_t arrsize = 0);
-            Vector(size_t fillsize, int num = 0);
+            Vector(int* arr = nullptr, size_t arrsize = 0, size_t cap = 100);
+            Vector(size_t fillsize, int num = 0, size_t cap = 100);
             int at(int index) const {return array_[index];};
             size_t size() const{return size_;};
+            size_t capacity() const{return capacity_;};
             int pop_back();
             void push_back(int num);
             bool empty() const {return size_ == 0;};
             Vector operator+(Vector& other) const;
             int operator[](int index) const {return this->at(index);}
             void copy(int* arr, size_t size = 0);
-            ~Vector(){delete array_;};
+            void resize(size_t cap, int fill = 0);
+            ~Vector(){delete[] array_;};
 
         private:
-            void resize(size_t cap);
             size_t size_;
             size_t capacity_;
             int* array_;

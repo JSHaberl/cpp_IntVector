@@ -8,6 +8,7 @@ TEST_CASE("Constructor and defaut values", "[Vector][Constructor]") {
         Vector v;
         REQUIRE(v.size() == 0);
         REQUIRE(v.empty() == true);
+        REQUIRE(v.capacity() == 100);
     }
 
     SECTION("Constructor with array") {
@@ -15,11 +16,39 @@ TEST_CASE("Constructor and defaut values", "[Vector][Constructor]") {
         Vector v(data, 4);
 
         REQUIRE(v.size() == 4);
+        REQUIRE(v.capacity() == 100);
         REQUIRE_FALSE(v.empty());
         REQUIRE(v.at(0) == 10);
         REQUIRE(v.at(1) == 20);
         REQUIRE(v.at(2) == 30);
         REQUIRE(v.at(3) == 40);
+    }
+
+    SECTION("Constructor with array of 100"){
+        int data[100] = {};
+        Vector v(data, 100);
+        REQUIRE(v.size() == 100);
+        REQUIRE(v.capacity() == 200);
+        REQUIRE_FALSE(v.empty());
+
+    }
+
+    SECTION("Constructor with array of 2 and set capacity"){
+        int data[2] = {};
+        Vector v(data, 2, 3);
+        REQUIRE(v.size() == 2);
+        REQUIRE(v.capacity() == 3);
+        REQUIRE_FALSE(v.empty());
+
+    }
+
+    SECTION("Constructor with array of 2 and insufficient capacity"){
+        int data[2] = {};
+        Vector v(data, 2, 1);
+        REQUIRE(v.size() == 2);
+        REQUIRE(v.capacity() == 4);
+        REQUIRE_FALSE(v.empty());
+
     }
 
     SECTION("Constructor with nullptr and size 0") {
@@ -31,6 +60,7 @@ TEST_CASE("Constructor and defaut values", "[Vector][Constructor]") {
     SECTION("Fill-Constructor with default fill 0") {
         Vector v(5);
         REQUIRE(v.size() == 5);
+        REQUIRE(v.capacity() == 100);
         for (size_t i{0}; i < 5; ++i) {
             REQUIRE(v.at(i) == 0);
         }
@@ -39,10 +69,25 @@ TEST_CASE("Constructor and defaut values", "[Vector][Constructor]") {
     SECTION("Fill-Constructor with defined fill") {
         Vector v(3, 42);
         REQUIRE(v.size() == 3);
+        REQUIRE(v.capacity() == 100);
         REQUIRE_FALSE(v.empty());
         for (size_t i{0}; i < 3; ++i) {
             REQUIRE(v.at(i) == 42);
         }
+    }
+
+    SECTION("Fill-Constructor with 100 fills"){
+        Vector v(100, 10);
+        REQUIRE(v.size() == 100);
+        REQUIRE(v.capacity() == 200);
+        REQUIRE_FALSE(v.empty());
+    }
+
+    SECTION("Fill-Constructor with 10 fills and insufficient capacity"){
+        Vector v(10, 53, 9);
+        REQUIRE(v.size() == 10);
+        REQUIRE(v.capacity() == 20);
+        REQUIRE_FALSE(v.empty());
     }
 }
 
@@ -105,8 +150,27 @@ TEST_CASE("Modification with push_back(), pop_back() and copy()", "[Vector][Modi
     SECTION("copying a smaller array on a Vector decreases its size"){
         v.copy(a_data, 4);
         REQUIRE(v.size() == 4);
+        REQUIRE(v.capacity() == 100);
         v.copy(b_data, 3);
         REQUIRE(v.size() == 3);
+        REQUIRE(v.capacity() == 100);
+    }
+
+    SECTION("resize increases capacity but not size"){
+        v.copy(a_data, 4);
+        v.resize(8);
+        REQUIRE(v.size() == 4);
+        REQUIRE(v.capacity() == 8);
+
+    }
+
+    SECTION("resize cannot increases capacity above size() * 2"){
+        v.copy(a_data, 4);
+        v.resize(9);
+        REQUIRE(v.size() == 4);
+        //Default value for capacity, resize did indeed not increase capacity above size if true
+        REQUIRE(v.capacity() == 100);
+
     }
 }
 
@@ -124,6 +188,7 @@ TEST_CASE("Addition with operator+", "[Vector][Operators]") {
         REQUIRE(c.at(2) == 3);
         REQUIRE(c.at(3) == 4);
         REQUIRE(c.at(4) == 5);
+        REQUIRE(c.capacity() == 100);
 
         REQUIRE(a.size() == 3);
         REQUIRE(b.size() == 2);
